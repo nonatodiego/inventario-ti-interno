@@ -13,7 +13,7 @@ import type { Resource } from "../features/resources/resourceTypes";
 
 const INVENTORY_STORAGE_KEY = "inventario-ti.records.v2";
 const RESOURCES_STORAGE_KEY = "inventario-ti.resources.v3";
-const HISTORY_STORAGE_KEY = "inventario-ti.history.v1";
+const HISTORY_STORAGE_KEY = "inventario-ti.history.v2";
 
 export function App() {
   const [activeRoute, setActiveRoute] = useState<AppRoute>("dashboard");
