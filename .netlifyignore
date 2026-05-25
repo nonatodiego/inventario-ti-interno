@@ -14,3 +14,4 @@ coverage/
 *.sqlite
 uploads/
 npm-debug.log*
+inventario-ti-ubuntu.zip
