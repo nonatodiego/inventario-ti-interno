@@ -1,0 +1,15 @@
+node_modules/
+.npm-cache/
+netlify-static/
+dist/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+!.env.netlify.example
+.netlify/
+*.db
+*.sqlite
+uploads/
+.DS_Store
+npm-debug.log*

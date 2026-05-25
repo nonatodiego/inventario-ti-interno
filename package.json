@@ -1,0 +1,26 @@
+{
+  "name": "inventario-ti",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Sistema interno de inventario de TI.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:web": "npm run dev --prefix apps/web",
+    "dev:api": "npm run dev --prefix apps/api",
+    "dev:all": "npm run dev --workspaces --if-present",
+    "build:web": "npm run build --prefix apps/web",
+    "build:api": "npm run build --prefix apps/api",
+    "build": "npm run build --workspaces --if-present",
+    "preview:web": "npm run preview --prefix apps/web",
+    "start:web": "node apps/web/server.mjs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
