@@ -1,5 +1,5 @@
-import { Eye, Plus, Search } from "lucide-react";
-import { type Dispatch, type FormEvent, type SetStateAction, useMemo, useState } from "react";
+import { Edit, Eye, Plus, Search, Trash2 } from "lucide-react";
+import { type Dispatch, type FormEvent, type ReactNode, type SetStateAction, useMemo, useState } from "react";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/Card";
@@ -33,7 +33,8 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
   const [action, setAction] = useState("all");
   const [backupStatus, setBackupStatus] = useState("all");
   const [selectedMovement, setSelectedMovement] = useState<LicenseMovement | null>(null);
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingMovement, setEditingMovement] = useState<LicenseMovement | null | undefined>(undefined);
+  const [movementToDelete, setMovementToDelete] = useState<LicenseMovement | null>(null);
   const [toast, setToast] = useState<{ title: string; description: string } | null>(null);
 
   const filteredMovements = useMemo(() => {
@@ -64,9 +65,24 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
   }
 
   function handleSave(movement: LicenseMovement) {
-    onMovementsChange((current) => [movement, ...current]);
-    setIsFormOpen(false);
-    showToast("Histórico registrado", "A movimentação da licença foi salva.");
+    onMovementsChange((current) => {
+      const exists = current.some((item) => item.id === movement.id);
+      return exists ? current.map((item) => (item.id === movement.id ? movement : item)) : [movement, ...current];
+    });
+    setEditingMovement(undefined);
+    showToast("Histórico salvo", "A movimentação da licença foi atualizada.");
+  }
+
+  function handleDelete() {
+    if (!movementToDelete) return;
+
+    onMovementsChange((current) => current.filter((movement) => movement.id !== movementToDelete.id));
+    setMovementToDelete(null);
+    showToast("Movimentação removida", "O registro foi excluído do histórico.");
+  }
+
+  function openCreateForm() {
+    setEditingMovement(null);
   }
 
   return (
@@ -76,7 +92,7 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
           <h1 className="text-2xl font-semibold">Histórico</h1>
           <p className="mt-1 text-sm text-muted-foreground">Movimentações de licenças O365 em desligamentos, transferências e desalocações.</p>
         </div>
-        <Button onClick={() => setIsFormOpen(true)}>
+        <Button onClick={openCreateForm}>
           <Plus className="h-4 w-4" />
           Nova movimentação
         </Button>
@@ -120,7 +136,7 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
                       <TH className="px-3">Novo usuário</TH>
                       <TH className="w-36 px-3">Responsável</TH>
                       <TH className="w-36 px-3">Backup</TH>
-                      <TH className="w-16 px-3">Ver</TH>
+                      <TH className="w-28 px-3">Ações</TH>
                     </tr>
                   </THead>
                   <TBody>
@@ -133,9 +149,17 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
                         <TD className="truncate px-3">{movement.responsible}</TD>
                         <TD className="px-3"><BackupBadge status={movement.backupStatus ?? "Não informado"} /></TD>
                         <TD className="px-3">
-                          <Button variant="ghost" aria-label="Ver detalhes" title="Ver detalhes" className="h-9 w-9 px-0" onClick={() => setSelectedMovement(movement)}>
-                            <Eye className="h-4 w-4" />
-                          </Button>
+                          <div className="flex items-center gap-1">
+                            <IconButton label="Ver detalhes" onClick={() => setSelectedMovement(movement)}>
+                              <Eye className="h-4 w-4" />
+                            </IconButton>
+                            <IconButton label="Editar" onClick={() => setEditingMovement(movement)}>
+                              <Edit className="h-4 w-4" />
+                            </IconButton>
+                            <IconButton label="Excluir" tone="danger" onClick={() => setMovementToDelete(movement)}>
+                              <Trash2 className="h-4 w-4" />
+                            </IconButton>
+                          </div>
                         </TD>
                       </tr>
                     ))}
@@ -145,7 +169,7 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
             </CardContent>
           ) : (
             <CardContent>
-              <EmptyState title="Nenhuma movimentação encontrada" description="Registre uma transferência ou desalocação para iniciar o histórico." actionLabel="Nova movimentação" onAction={() => setIsFormOpen(true)} />
+              <EmptyState title="Nenhuma movimentação encontrada" description="Registre uma transferência ou desalocação para iniciar o histórico." actionLabel="Nova movimentação" onAction={openCreateForm} />
             </CardContent>
           )}
         </Card>
@@ -177,12 +201,28 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
         </Card>
       </section>
 
-      <Modal open={isFormOpen} title="Nova movimentação de licença" size="lg" onClose={() => setIsFormOpen(false)}>
-        <MovementForm onCancel={() => setIsFormOpen(false)} onSave={handleSave} />
+      <Modal open={editingMovement !== undefined} title={editingMovement ? "Editar movimentação de licença" : "Nova movimentação de licença"} size="lg" onClose={() => setEditingMovement(undefined)}>
+        <MovementForm initialMovement={editingMovement ?? null} onCancel={() => setEditingMovement(undefined)} onSave={handleSave} />
       </Modal>
 
       <Modal open={selectedMovement !== null} title="Detalhes da movimentação" onClose={() => setSelectedMovement(null)}>
         {selectedMovement ? <MovementDetails movement={selectedMovement} /> : null}
+      </Modal>
+
+      <Modal open={movementToDelete !== null} title="Excluir movimentação" onClose={() => setMovementToDelete(null)}>
+        <div className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Tem certeza que deseja excluir a movimentação de <strong className="text-foreground">{movementToDelete?.previousUser}</strong>?
+          </p>
+          <div className="flex justify-end gap-2">
+            <Button variant="secondary" onClick={() => setMovementToDelete(null)}>
+              Cancelar
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              Excluir
+            </Button>
+          </div>
+        </div>
       </Modal>
 
       {toast ? (
@@ -194,16 +234,16 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
   );
 }
 
-function MovementForm({ onCancel, onSave }: { onCancel: () => void; onSave: (movement: LicenseMovement) => void }) {
+function MovementForm({ initialMovement, onCancel, onSave }: { initialMovement: LicenseMovement | null; onCancel: () => void; onSave: (movement: LicenseMovement) => void }) {
   const [form, setForm] = useState<FormState>({
-    date: new Date().toISOString().slice(0, 10),
-    action: "Desalocação",
-    license: "O365 E1",
-    previousUser: "",
-    newUser: "",
-    responsible: "Diego Nonato",
-    backupStatus: "Não informado",
-    notes: ""
+    date: initialMovement?.date ?? new Date().toISOString().slice(0, 10),
+    action: initialMovement?.action ?? "Desalocação",
+    license: initialMovement?.license ?? "O365 E1",
+    previousUser: initialMovement?.previousUser ?? "",
+    newUser: initialMovement?.newUser ?? "",
+    responsible: initialMovement?.responsible ?? "Diego Nonato",
+    backupStatus: initialMovement?.backupStatus ?? "Não informado",
+    notes: initialMovement?.notes ?? ""
   });
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
 
@@ -228,7 +268,7 @@ function MovementForm({ onCancel, onSave }: { onCancel: () => void; onSave: (mov
     }
 
     onSave({
-      id: `hist-${Date.now()}`,
+      id: initialMovement?.id ?? `hist-${Date.now()}`,
       date: form.date,
       action: form.action,
       license: form.license,
@@ -285,6 +325,20 @@ function Detail({ label, value }: { label: string; value: string }) {
       <dt className="text-xs text-muted-foreground">{label}</dt>
       <dd className="mt-1 font-medium">{value}</dd>
     </div>
+  );
+}
+
+function IconButton({ children, label, onClick, tone = "default" }: { children: ReactNode; label: string; onClick: () => void; tone?: "default" | "danger" }) {
+  return (
+    <Button
+      variant="ghost"
+      aria-label={label}
+      title={label}
+      className={tone === "danger" ? "h-9 w-9 px-0 text-destructive hover:bg-red-50 hover:text-destructive" : "h-9 w-9 px-0"}
+      onClick={onClick}
+    >
+      {children}
+    </Button>
   );
 }
 
