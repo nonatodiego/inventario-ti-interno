@@ -28,8 +28,8 @@ export function DashboardPage({ resources, licenseMovements }: DashboardPageProp
     return [
       { name: "Notebook", total: metrics.notebooks },
       { name: "Desktop", total: metrics.desktops },
-      { name: "Licencas E1", total: metrics.e1Licenses },
-      { name: "Licencas E3", total: metrics.e3Licenses },
+      { name: "Licenças E1", total: metrics.e1Licenses },
+      { name: "Licenças E3", total: metrics.e3Licenses },
       { name: "Headset", total: metrics.headsets },
       { name: "Celular", total: metrics.phones }
     ];
@@ -41,7 +41,7 @@ export function DashboardPage({ resources, licenseMovements }: DashboardPageProp
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
         <div>
           <h1 className="text-2xl font-semibold tracking-normal">Dashboard</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Recursos Disponiveis</p>
+          <p className="mt-1 text-sm text-muted-foreground">Recursos disponíveis</p>
         </div>
       </div>
 
@@ -49,37 +49,37 @@ export function DashboardPage({ resources, licenseMovements }: DashboardPageProp
         <StatCard
           title="Notebooks"
           value={String(metrics.notebooks)}
-          detail="Notebooks disponiveis"
+          detail="Notebooks disponíveis"
           icon={<Laptop className="h-5 w-5" />}
         />
         <StatCard
           title="Desktops"
           value={String(metrics.desktops)}
-          detail="Desktops disponiveis"
+          detail="Desktops disponíveis"
           icon={<Cpu className="h-5 w-5" />}
         />
         <StatCard
-          title="Licencas E1"
+          title="Licenças E1"
           value={String(metrics.e1Licenses)}
-          detail="Licencas E1 disponiveis"
+          detail="Licenças E1 disponíveis"
           icon={<BadgeCheck className="h-5 w-5" />}
         />
         <StatCard
-          title="Licencas E3"
+          title="Licenças E3"
           value={String(metrics.e3Licenses)}
-          detail="Licencas E3 disponiveis"
+          detail="Licenças E3 disponíveis"
           icon={<BadgeCheck className="h-5 w-5" />}
         />
         <StatCard
           title="Headsets"
           value={String(metrics.headsets)}
-          detail="Headsets disponiveis"
+          detail="Headsets disponíveis"
           icon={<Headphones className="h-5 w-5" />}
         />
         <StatCard
           title="Celulares"
           value={String(metrics.phones)}
-          detail="Celulares disponiveis"
+          detail="Celulares disponíveis"
           icon={<Smartphone className="h-5 w-5" />}
         />
       </section>
@@ -104,7 +104,7 @@ export function DashboardPage({ resources, licenseMovements }: DashboardPageProp
               </ResponsiveContainer>
             </div>
           ) : (
-            <EmptyState title="Sem dados" description="Cadastre recursos na aba Recursos para visualizar o grafico." />
+            <EmptyState title="Sem dados" description="Cadastre recursos na aba Recursos para visualizar o gráfico." />
           )}
         </CardContent>
       </Card>
@@ -117,5 +117,5 @@ function countAvailable(resources: Resource[], type: ResourceType) {
 }
 
 function countAvailableLicenses(movements: LicenseMovement[], license: LicenseMovementType) {
-  return movements.filter((movement) => movement.license === license && movement.finalStatus === "Disponivel").length;
+  return movements.filter((movement) => movement.license === license && movement.finalStatus === "Disponível").length;
 }

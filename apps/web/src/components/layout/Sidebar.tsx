@@ -12,7 +12,7 @@ export function Sidebar({ activeRoute, onRouteChange }: SidebarProps) {
     <aside className="hidden w-64 border-r border-border bg-navy text-white lg:block">
       <div className="flex h-16 items-center border-b border-border px-5">
         <div>
-          <strong className="block text-lg">Inventario TI</strong>
+          <strong className="block text-lg">Inventário TI</strong>
           <span className="text-xs text-slate-300">Controle interno</span>
         </div>
       </div>

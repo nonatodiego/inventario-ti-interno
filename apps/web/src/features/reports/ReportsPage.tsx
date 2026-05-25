@@ -17,13 +17,13 @@ type ReportRow = Record<string, string | number>;
 const initialResources: Resource[] = [];
 
 const reportModels: Array<{ name: string; format: ReportFormat; type: ReportType; updatedAt: string }> = [
-  { name: "Inventario completo", format: "csv", type: "inventory", updatedAt: "Hoje" },
+  { name: "Inventário completo", format: "csv", type: "inventory", updatedAt: "Hoje" },
   { name: "Equipamentos por colaborador", format: "pdf", type: "collaborator", updatedAt: "Hoje" },
-  { name: "Recursos disponiveis", format: "csv", type: "resources", updatedAt: "Ontem" }
+  { name: "Recursos disponíveis", format: "csv", type: "resources", updatedAt: "Ontem" }
 ];
 
 const reportLabels: Record<ReportType, string> = {
-  inventory: "Inventario completo",
+  inventory: "Inventário completo",
   collaborator: "Por colaborador",
   resources: "Recursos"
 };
@@ -48,7 +48,7 @@ export function ReportsPage() {
     }
 
     setToast({
-      title: "Relatorio gerado",
+      title: "Relatório gerado",
       description: `${report.title} foi gerado em ${selectedFormat.toUpperCase()}.`
     });
 
@@ -58,13 +58,13 @@ export function ReportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold">Relatorios</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Exportacoes operacionais para auditoria e acompanhamento.</p>
+        <h1 className="text-2xl font-semibold">Relatórios</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Exportações operacionais para auditoria e acompanhamento.</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Gerar relatorio</CardTitle>
+          <CardTitle>Gerar relatório</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-[1fr_180px_140px]">
           <Select
@@ -72,7 +72,7 @@ export function ReportsPage() {
             value={reportType}
             onChange={(event) => setReportType(event.target.value as ReportType)}
             options={[
-              { label: "Inventario completo", value: "inventory" },
+              { label: "Inventário completo", value: "inventory" },
               { label: "Por colaborador", value: "collaborator" },
               { label: "Recursos", value: "resources" }
             ]}
@@ -95,7 +95,7 @@ export function ReportsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>{generatedReport ? "Ultimo relatorio gerado" : "Previa do relatorio"}</CardTitle>
+          <CardTitle>{generatedReport ? "Último relatório gerado" : "Prévia do relatório"}</CardTitle>
         </CardHeader>
         <CardContent>
           <ReportPreview title={generatedReport?.title ?? currentReport.title} rows={generatedReport?.rows ?? currentReport.rows} />
@@ -104,16 +104,16 @@ export function ReportsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Modelos disponiveis</CardTitle>
+          <CardTitle>Modelos disponíveis</CardTitle>
         </CardHeader>
         <Table>
-          <caption className="sr-only">Lista de modelos de relatorios disponiveis</caption>
+          <caption className="sr-only">Lista de modelos de relatórios disponíveis</caption>
           <THead>
             <tr>
-              <TH>Relatorio</TH>
+              <TH>Relatório</TH>
               <TH>Formato</TH>
-              <TH>Atualizacao</TH>
-              <TH>Acao</TH>
+              <TH>Atualização</TH>
+              <TH>Ação</TH>
             </tr>
           </THead>
           <TBody>
@@ -149,7 +149,7 @@ export function ReportsPage() {
 
 function ReportPreview({ title, rows }: { title: string; rows: ReportRow[] }) {
   if (rows.length === 0) {
-    return <EmptyState title="Nenhum dado encontrado" description="Nao ha informacoes suficientes para gerar este relatorio." />;
+    return <EmptyState title="Nenhum dado encontrado" description="Não há informações suficientes para gerar este relatório." />;
   }
 
   const headers = Object.keys(rows[0]);
@@ -158,10 +158,10 @@ function ReportPreview({ title, rows }: { title: string; rows: ReportRow[] }) {
     <div className="space-y-3">
       <div>
         <p className="text-sm font-medium">{title}</p>
-        <p className="text-sm text-muted-foreground">{rows.length} registro(s) no relatorio.</p>
+        <p className="text-sm text-muted-foreground">{rows.length} registro(s) no relatório.</p>
       </div>
       <Table className="min-w-[760px]">
-        <caption className="sr-only">Previa do relatorio gerado</caption>
+        <caption className="sr-only">Prévia do relatório gerado</caption>
         <THead>
           <tr>
             {headers.map((header) => (
@@ -186,11 +186,11 @@ function ReportPreview({ title, rows }: { title: string; rows: ReportRow[] }) {
 function buildReport(type: ReportType) {
   if (type === "resources") {
     return {
-      title: "Recursos disponiveis",
+      title: "Recursos disponíveis",
       rows: initialResources.map((resource) => ({
         Recurso: resource.type,
         Total: resource.total,
-        Disponivel: resource.available,
+        Disponível: resource.available,
         "Em uso": resource.total - resource.available
       }))
     };
@@ -210,13 +210,13 @@ function buildReport(type: ReportType) {
   }
 
   return {
-    title: "Inventario completo",
+    title: "Inventário completo",
     rows: initialInventoryRecords.map((record) => ({
       Colaborador: record.collaborator,
       Cargo: record.role,
       Localidade: record.location,
       Gestor: record.manager,
-      Licenca: record.license,
+      Licença: record.license,
       Equipamentos: record.equipment.map((item) => item.type).join(", "),
       Termo: record.termAttached ? "Anexado" : "Pendente",
       Cadastro: formatDate(record.regDate)

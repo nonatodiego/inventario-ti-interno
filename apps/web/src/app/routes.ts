@@ -11,8 +11,8 @@ export type NavItem = {
 
 export const navItems: NavItem[] = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "inventory", label: "Inventario", icon: MonitorSmartphone },
+  { id: "inventory", label: "Inventário", icon: MonitorSmartphone },
   { id: "resources", label: "Recursos", icon: Boxes },
-  { id: "history", label: "Historico", icon: History },
-  { id: "reports", label: "Relatorios", icon: ChartNoAxesCombined }
+  { id: "history", label: "Histórico", icon: History },
+  { id: "reports", label: "Relatórios", icon: ChartNoAxesCombined }
 ];

@@ -1,7 +1,7 @@
-export type LicenseMovementAction = "Transferencia" | "Desalocacao";
-export type LicenseMovementStatus = "Transferida" | "Disponivel";
+export type LicenseMovementAction = "Transferência" | "Desalocação";
+export type LicenseMovementStatus = "Transferida" | "Disponível";
 export type LicenseMovementType = "O365 E1" | "O365 E3";
-export type BackupStatus = "Realizado" | "Nao realizado" | "Nao informado";
+export type BackupStatus = "Realizado" | "Não realizado" | "Não informado";
 
 export type LicenseMovement = {
   id: string;
@@ -22,14 +22,14 @@ export const licenseOptions: Array<{ label: string; value: LicenseMovementType }
 ];
 
 export const actionOptions: Array<{ label: string; value: LicenseMovementAction }> = [
-  { label: "Transferencia", value: "Transferencia" },
-  { label: "Desalocacao", value: "Desalocacao" }
+  { label: "Transferência", value: "Transferência" },
+  { label: "Desalocação", value: "Desalocação" }
 ];
 
 export const backupStatusOptions: Array<{ label: string; value: BackupStatus }> = [
   { label: "Backup realizado", value: "Realizado" },
-  { label: "Backup nao realizado", value: "Nao realizado" },
-  { label: "Nao informado", value: "Nao informado" }
+  { label: "Backup não realizado", value: "Não realizado" },
+  { label: "Não informado", value: "Não informado" }
 ];
 
 export const responsibleOptions = [

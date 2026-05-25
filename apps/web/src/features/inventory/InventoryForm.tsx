@@ -72,7 +72,7 @@ export function InventoryForm({ initialRecord, onCancel, onSave }: InventoryForm
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      setErrors((current) => ({ ...current, termFile: "O PDF deve ter no maximo 10 MB." }));
+      setErrors((current) => ({ ...current, termFile: "O PDF deve ter no máximo 10 MB." }));
       setTermFileName("");
       setTermFileData("");
       return;
@@ -288,7 +288,7 @@ function fileToDataUrl(file: File) {
   return new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(String(reader.result ?? ""));
-    reader.onerror = () => reject(new Error("Nao foi possivel ler o arquivo."));
+    reader.onerror = () => reject(new Error("Não foi possível ler o arquivo."));
     reader.readAsDataURL(file);
   });
 }

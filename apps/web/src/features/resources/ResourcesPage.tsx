@@ -51,7 +51,7 @@ export function ResourcesPage({ resources, onResourcesChange }: ResourcesPagePro
       return exists ? current.map((item) => (item.id === resource.id ? resource : item)) : [resource, ...current];
     });
     setEditingResource(undefined);
-    showToast("Recurso salvo", "O recurso disponivel foi atualizado.");
+    showToast("Recurso salvo", "O recurso disponível foi atualizado.");
   }
 
   function handleDelete() {
@@ -59,7 +59,7 @@ export function ResourcesPage({ resources, onResourcesChange }: ResourcesPagePro
 
     onResourcesChange((current) => current.filter((resource) => resource.id !== resourceToDelete.id));
     setResourceToDelete(null);
-    showToast("Recurso excluido", "O recurso foi removido da lista.");
+    showToast("Recurso excluído", "O recurso foi removido da lista.");
   }
 
   return (
@@ -95,14 +95,14 @@ export function ResourcesPage({ resources, onResourcesChange }: ResourcesPagePro
 
           {filteredResources.length > 0 ? (
             <Table className="min-w-[760px]">
-              <caption className="sr-only">Lista de recursos disponiveis</caption>
+              <caption className="sr-only">Lista de recursos disponíveis</caption>
               <THead>
                 <tr>
                   <TH>Recurso</TH>
                   <TH>Total</TH>
-                  <TH>Disponivel</TH>
+                  <TH>Disponível</TH>
                   <TH>Uso</TH>
-                  <TH>Acoes</TH>
+                  <TH>Ações</TH>
                 </tr>
               </THead>
               <TBody>
@@ -138,7 +138,7 @@ export function ResourcesPage({ resources, onResourcesChange }: ResourcesPagePro
               </TBody>
             </Table>
           ) : (
-            <EmptyState title="Nenhum recurso cadastrado" description="Cadastre um recurso para alimentar os numeros do Dashboard." actionLabel="Novo recurso" onAction={() => setEditingResource(null)} />
+            <EmptyState title="Nenhum recurso cadastrado" description="Cadastre um recurso para alimentar os números do Dashboard." actionLabel="Novo recurso" onAction={() => setEditingResource(null)} />
           )}
         </CardContent>
       </Card>
@@ -201,15 +201,15 @@ function ResourceForm({
     const nextErrors: Partial<Record<keyof FormState, string>> = {};
 
     if (!Number.isInteger(total) || total < 0) {
-      nextErrors.total = "Informe um total valido.";
+      nextErrors.total = "Informe um total válido.";
     }
 
     if (!Number.isInteger(available) || available < 0) {
-      nextErrors.available = "Informe uma quantidade valida.";
+      nextErrors.available = "Informe uma quantidade válida.";
     }
 
     if (Number.isInteger(total) && Number.isInteger(available) && available > total) {
-      nextErrors.available = "Disponivel nao pode ser maior que o total.";
+      nextErrors.available = "Disponível não pode ser maior que o total.";
     }
 
     if (Object.keys(nextErrors).length > 0) {
@@ -235,7 +235,7 @@ function ResourceForm({
       />
       <div className="grid gap-3 sm:grid-cols-2">
         <Input label="Quantidade total" type="number" min={0} value={form.total} onChange={(event) => updateField("total", event.target.value)} hint={errors.total} />
-        <Input label="Quantidade disponivel" type="number" min={0} value={form.available} onChange={(event) => updateField("available", event.target.value)} hint={errors.available} />
+        <Input label="Quantidade disponível" type="number" min={0} value={form.available} onChange={(event) => updateField("available", event.target.value)} hint={errors.available} />
       </div>
       <div className="flex justify-end gap-2">
         <Button type="button" variant="secondary" onClick={onCancel}>

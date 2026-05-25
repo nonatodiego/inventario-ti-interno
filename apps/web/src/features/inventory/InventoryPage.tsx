@@ -91,14 +91,14 @@ export function InventoryPage({ inventoryRecords, onInventoryRecordsChange, onLi
       setToast({
         title: "PDF gerado",
         description: result.includedTerm
-          ? `O inventario de ${record.collaborator} foi baixado com o termo anexado.`
-          : `O inventario de ${record.collaborator} foi baixado com a observacao de termo nao assinado.`,
+          ? `O inventário de ${record.collaborator} foi baixado com o termo anexado.`
+          : `O inventário de ${record.collaborator} foi baixado com a observação de termo não assinado.`,
         tone: "success"
       });
     } catch {
       setToast({
-        title: "Nao foi possivel gerar o PDF",
-        description: "Verifique se o termo anexado e um PDF valido e tente novamente.",
+        title: "Não foi possível gerar o PDF",
+        description: "Verifique se o termo anexado é um PDF válido e tente novamente.",
         tone: "danger"
       });
     }
@@ -111,13 +111,13 @@ export function InventoryPage({ inventoryRecords, onInventoryRecordsChange, onLi
     onLicenseMovementAdd?.({
       id: `hist-${Date.now()}`,
       date: new Date().toISOString().slice(0, 10),
-      action: "Desalocacao",
+      action: "Desalocação",
       license: recordToDelete.license === "E3" ? "O365 E3" : "O365 E1",
       previousUser: recordToDelete.collaborator,
       responsible: "Diego Nonato",
-      finalStatus: "Disponivel",
-      backupStatus: "Nao informado",
-      notes: "Registro automatico gerado ao excluir cadastro do inventario."
+      finalStatus: "Disponível",
+      backupStatus: "Não informado",
+      notes: "Registro automático gerado ao excluir cadastro do inventário."
     });
     setRecordToDelete(null);
     setToast({
@@ -351,12 +351,12 @@ function Detail({ label, value }: { label: string; value?: string }) {
 
 async function downloadInventoryPdf(record: InventoryRecord) {
   const lines = [
-    "Inventario de TI",
+    "Inventário de TI",
     `Colaborador: ${record.collaborator}`,
     `Cargo: ${record.role}`,
     `Localidade: ${record.location}`,
     `Gestor: ${record.manager}`,
-    `Licenca: ${record.license}`,
+    `Licença: ${record.license}`,
     `Termo: ${record.termAttached ? "Anexado" : "Pendente"}`,
     `Data de cadastro: ${formatDate(record.regDate)}`,
     "",
@@ -397,8 +397,8 @@ async function createInventoryPdf(lines: string[], record: InventoryRecord) {
     addTermStatusPage(
       pdf,
       record.termAttached
-        ? "Termo anexado nao disponivel neste cadastro. Reanexe o PDF do termo para que ele saia junto ao resumo."
-        : "Esse usuario nao tem termo assinado.",
+        ? "Termo anexado não disponível neste cadastro. Reanexe o PDF do termo para que ele saia junto ao resumo."
+        : "Esse usuário não tem termo assinado.",
       font,
       boldFont
     );
@@ -411,7 +411,7 @@ function addSummaryPage(pdf: PDFDocument, lines: string[], font: PDFFont, boldFo
   const page = pdf.addPage([595, 842]);
   const safeLines = lines.map((line) => sanitizePdfText(line));
 
-  page.drawText(safeLines[0] ?? "Inventario de TI", {
+  page.drawText(safeLines[0] ?? "Inventário de TI", {
     x: 48,
     y: 790,
     size: 18,

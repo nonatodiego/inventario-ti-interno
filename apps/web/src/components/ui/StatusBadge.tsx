@@ -2,7 +2,7 @@ import { Badge } from "./Badge";
 
 const statusLabels: Record<string, string> = {
   assigned: "Entregue",
-  available: "Disponivel",
+  available: "Disponível",
   maintenance: "Manutencao",
   retired: "Baixado",
   lost: "Extraviado",

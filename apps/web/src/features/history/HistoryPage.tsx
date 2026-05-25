@@ -66,19 +66,19 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
   function handleSave(movement: LicenseMovement) {
     onMovementsChange((current) => [movement, ...current]);
     setIsFormOpen(false);
-    showToast("Historico registrado", "A movimentacao da licenca foi salva.");
+    showToast("Histórico registrado", "A movimentação da licença foi salva.");
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
         <div>
-          <h1 className="text-2xl font-semibold">Historico</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Movimentacoes de licencas O365 em desligamentos, transferencias e desalocacoes.</p>
+          <h1 className="text-2xl font-semibold">Histórico</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Movimentações de licenças O365 em desligamentos, transferências e desalocações.</p>
         </div>
         <Button onClick={() => setIsFormOpen(true)}>
           <Plus className="h-4 w-4" />
-          Nova movimentacao
+          Nova movimentação
         </Button>
       </div>
 
@@ -89,10 +89,10 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
         <CardContent className="grid gap-3 xl:grid-cols-[1fr_150px_170px_190px]">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input className="pl-9" placeholder="Buscar usuario, responsavel ou observacao" value={search} onChange={(event) => setSearch(event.target.value)} />
+            <Input className="pl-9" placeholder="Buscar usuário, responsável ou observação" value={search} onChange={(event) => setSearch(event.target.value)} />
           </div>
-          <Select aria-label="Licenca" value={license} onChange={(event) => setLicense(event.target.value)} options={[{ label: "Todas licencas", value: "all" }, ...licenseOptions]} />
-          <Select aria-label="Tipo de acao" value={action} onChange={(event) => setAction(event.target.value)} options={[{ label: "Todas as acoes", value: "all" }, ...actionOptions]} />
+          <Select aria-label="Licença" value={license} onChange={(event) => setLicense(event.target.value)} options={[{ label: "Todas as licenças", value: "all" }, ...licenseOptions]} />
+          <Select aria-label="Tipo de ação" value={action} onChange={(event) => setAction(event.target.value)} options={[{ label: "Todas as ações", value: "all" }, ...actionOptions]} />
           <Select
             aria-label="Backup"
             value={backupStatus}
@@ -105,20 +105,20 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
       <section className="grid min-w-0 gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
         <Card className="min-w-0">
           <CardHeader>
-            <CardTitle>Movimentacoes</CardTitle>
+            <CardTitle>Movimentações</CardTitle>
           </CardHeader>
           {filteredMovements.length > 0 ? (
             <CardContent>
               <div className="max-w-full">
                 <Table className="min-w-0 table-fixed text-sm">
-                  <caption className="sr-only">Historico de movimentacoes de licencas O365</caption>
+                  <caption className="sr-only">Histórico de movimentações de licenças O365</caption>
                   <THead>
                     <tr>
                       <TH className="w-24 px-3">Data</TH>
-                      <TH className="w-28 px-3">Licenca</TH>
-                      <TH className="px-3">Usuario anterior</TH>
-                      <TH className="px-3">Novo usuario</TH>
-                      <TH className="w-36 px-3">Responsavel</TH>
+                      <TH className="w-28 px-3">Licença</TH>
+                      <TH className="px-3">Usuário anterior</TH>
+                      <TH className="px-3">Novo usuário</TH>
+                      <TH className="w-36 px-3">Responsável</TH>
                       <TH className="w-36 px-3">Backup</TH>
                       <TH className="w-16 px-3">Ver</TH>
                     </tr>
@@ -131,7 +131,7 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
                         <TD className="truncate px-3 text-muted-foreground">{movement.previousUser}</TD>
                         <TD className="truncate px-3 font-semibold text-foreground">{movement.newUser || "-"}</TD>
                         <TD className="truncate px-3">{movement.responsible}</TD>
-                        <TD className="px-3"><BackupBadge status={movement.backupStatus ?? "Nao informado"} /></TD>
+                        <TD className="px-3"><BackupBadge status={movement.backupStatus ?? "Não informado"} /></TD>
                         <TD className="px-3">
                           <Button variant="ghost" aria-label="Ver detalhes" title="Ver detalhes" className="h-9 w-9 px-0" onClick={() => setSelectedMovement(movement)}>
                             <Eye className="h-4 w-4" />
@@ -145,14 +145,14 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
             </CardContent>
           ) : (
             <CardContent>
-              <EmptyState title="Nenhuma movimentacao encontrada" description="Registre uma transferencia ou desalocacao para iniciar o historico." actionLabel="Nova movimentacao" onAction={() => setIsFormOpen(true)} />
+              <EmptyState title="Nenhuma movimentação encontrada" description="Registre uma transferência ou desalocação para iniciar o histórico." actionLabel="Nova movimentação" onAction={() => setIsFormOpen(true)} />
             </CardContent>
           )}
         </Card>
 
         <Card className="min-w-0">
           <CardHeader>
-            <CardTitle>Timeline por licenca</CardTitle>
+            <CardTitle>Timeline por licença</CardTitle>
           </CardHeader>
           <CardContent>
             {timeline.length > 0 ? (
@@ -165,23 +165,23 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
                     </div>
                     <p className="mt-2 text-sm font-medium">{movement.license}</p>
                     <p className="text-sm text-muted-foreground">
-                      {movement.previousUser} {movement.newUser ? `-> ${movement.newUser}` : "-> disponivel"}
+                      {movement.previousUser} {movement.newUser ? `-> ${movement.newUser}` : "-> disponível"}
                     </p>
                   </li>
                 ))}
               </ol>
             ) : (
-              <EmptyState title="Timeline vazia" description="As movimentacoes recentes aparecerao aqui." />
+              <EmptyState title="Timeline vazia" description="As movimentações recentes aparecerão aqui." />
             )}
           </CardContent>
         </Card>
       </section>
 
-      <Modal open={isFormOpen} title="Nova movimentacao de licenca" size="lg" onClose={() => setIsFormOpen(false)}>
+      <Modal open={isFormOpen} title="Nova movimentação de licença" size="lg" onClose={() => setIsFormOpen(false)}>
         <MovementForm onCancel={() => setIsFormOpen(false)} onSave={handleSave} />
       </Modal>
 
-      <Modal open={selectedMovement !== null} title="Detalhes da movimentacao" onClose={() => setSelectedMovement(null)}>
+      <Modal open={selectedMovement !== null} title="Detalhes da movimentação" onClose={() => setSelectedMovement(null)}>
         {selectedMovement ? <MovementDetails movement={selectedMovement} /> : null}
       </Modal>
 
@@ -197,17 +197,17 @@ export function HistoryPage({ movements, onMovementsChange }: HistoryPageProps) 
 function MovementForm({ onCancel, onSave }: { onCancel: () => void; onSave: (movement: LicenseMovement) => void }) {
   const [form, setForm] = useState<FormState>({
     date: new Date().toISOString().slice(0, 10),
-    action: "Desalocacao",
+    action: "Desalocação",
     license: "O365 E1",
     previousUser: "",
     newUser: "",
     responsible: "Diego Nonato",
-    backupStatus: "Nao informado",
+    backupStatus: "Não informado",
     notes: ""
   });
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
 
-  const finalStatus: LicenseMovementStatus = form.action === "Transferencia" ? "Transferida" : "Disponivel";
+  const finalStatus: LicenseMovementStatus = form.action === "Transferência" ? "Transferida" : "Disponível";
 
   function updateField<Key extends keyof FormState>(field: Key, value: FormState[Key]) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -218,9 +218,9 @@ function MovementForm({ onCancel, onSave }: { onCancel: () => void; onSave: (mov
     event.preventDefault();
     const nextErrors: Partial<Record<keyof FormState, string>> = {};
 
-    if (!form.previousUser.trim()) nextErrors.previousUser = "Informe o usuario anterior.";
-    if (form.action === "Transferencia" && !form.newUser.trim()) nextErrors.newUser = "Informe o novo usuario.";
-    if (!form.responsible.trim()) nextErrors.responsible = "Informe o responsavel.";
+    if (!form.previousUser.trim()) nextErrors.previousUser = "Informe o usuário anterior.";
+    if (form.action === "Transferência" && !form.newUser.trim()) nextErrors.newUser = "Informe o novo usuário.";
+    if (!form.responsible.trim()) nextErrors.responsible = "Informe o responsável.";
 
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
@@ -233,7 +233,7 @@ function MovementForm({ onCancel, onSave }: { onCancel: () => void; onSave: (mov
       action: form.action,
       license: form.license,
       previousUser: form.previousUser.trim(),
-      newUser: form.action === "Transferencia" ? form.newUser.trim() : undefined,
+      newUser: form.action === "Transferência" ? form.newUser.trim() : undefined,
       responsible: form.responsible.trim(),
       finalStatus,
       backupStatus: form.backupStatus,
@@ -245,20 +245,20 @@ function MovementForm({ onCancel, onSave }: { onCancel: () => void; onSave: (mov
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="grid gap-3 md:grid-cols-2">
         <Input label="Data" type="date" value={form.date} onChange={(event) => updateField("date", event.target.value)} />
-        <Select label="Tipo de acao" value={form.action} onChange={(event) => updateField("action", event.target.value as LicenseMovementAction)} options={actionOptions} />
-        <Select label="Licenca" value={form.license} onChange={(event) => updateField("license", event.target.value as LicenseMovementType)} options={licenseOptions} />
-        <Select label="Responsavel" value={form.responsible} onChange={(event) => updateField("responsible", event.target.value)} options={responsibleOptions} />
-        <Input label="Usuario anterior" value={form.previousUser} onChange={(event) => updateField("previousUser", event.target.value)} hint={errors.previousUser} />
-        <Input label="Novo usuario" disabled={form.action === "Desalocacao"} value={form.newUser} onChange={(event) => updateField("newUser", event.target.value)} hint={form.action === "Desalocacao" ? "Nao necessario para desalocacao." : errors.newUser} />
+        <Select label="Tipo de ação" value={form.action} onChange={(event) => updateField("action", event.target.value as LicenseMovementAction)} options={actionOptions} />
+        <Select label="Licença" value={form.license} onChange={(event) => updateField("license", event.target.value as LicenseMovementType)} options={licenseOptions} />
+        <Select label="Responsável" value={form.responsible} onChange={(event) => updateField("responsible", event.target.value)} options={responsibleOptions} />
+        <Input label="Usuário anterior" value={form.previousUser} onChange={(event) => updateField("previousUser", event.target.value)} hint={errors.previousUser} />
+        <Input label="Novo usuário" disabled={form.action === "Desalocação"} value={form.newUser} onChange={(event) => updateField("newUser", event.target.value)} hint={form.action === "Desalocação" ? "Não necessário para desalocação." : errors.newUser} />
         <Select label="Backup da conta" value={form.backupStatus} onChange={(event) => updateField("backupStatus", event.target.value as BackupStatus)} options={backupStatusOptions} />
       </div>
-      <Input label="Observacoes" value={form.notes} onChange={(event) => updateField("notes", event.target.value)} />
+      <Input label="Observações" value={form.notes} onChange={(event) => updateField("notes", event.target.value)} />
       <div className="rounded-md border border-border bg-muted/40 p-3 text-sm text-muted-foreground">
         Status final: <strong className="text-foreground">{finalStatus}</strong>
       </div>
       <div className="flex justify-end gap-2">
         <Button type="button" variant="secondary" onClick={onCancel}>Cancelar</Button>
-        <Button type="submit">Salvar movimentacao</Button>
+        <Button type="submit">Salvar movimentação</Button>
       </div>
     </form>
   );
@@ -268,13 +268,13 @@ function MovementDetails({ movement }: { movement: LicenseMovement }) {
   return (
     <dl className="grid gap-3 text-sm sm:grid-cols-2">
       <Detail label="Data" value={formatDate(movement.date)} />
-      <Detail label="Tipo de acao" value={movement.action} />
-      <Detail label="Licenca" value={movement.license} />
-      <Detail label="Usuario anterior" value={movement.previousUser} />
-      <Detail label="Novo usuario" value={movement.newUser || "-"} />
-      <Detail label="Responsavel" value={movement.responsible} />
-      <Detail label="Backup da conta" value={movement.backupStatus ?? "Nao informado"} />
-      <Detail label="Observacoes" value={movement.notes || "-"} />
+      <Detail label="Tipo de ação" value={movement.action} />
+      <Detail label="Licença" value={movement.license} />
+      <Detail label="Usuário anterior" value={movement.previousUser} />
+      <Detail label="Novo usuário" value={movement.newUser || "-"} />
+      <Detail label="Responsável" value={movement.responsible} />
+      <Detail label="Backup da conta" value={movement.backupStatus ?? "Não informado"} />
+      <Detail label="Observações" value={movement.notes || "-"} />
     </dl>
   );
 }
@@ -289,11 +289,11 @@ function Detail({ label, value }: { label: string; value: string }) {
 }
 
 function ActionBadge({ action }: { action: LicenseMovementAction }) {
-  return <Badge tone={action === "Transferencia" ? "info" : "warning"}>{action}</Badge>;
+  return <Badge tone={action === "Transferência" ? "info" : "warning"}>{action}</Badge>;
 }
 
 function BackupBadge({ status }: { status: BackupStatus }) {
-  const tone = status === "Realizado" ? "success" : status === "Nao realizado" ? "danger" : "default";
+  const tone = status === "Realizado" ? "success" : status === "Não realizado" ? "danger" : "default";
   return <Badge tone={tone}>{status}</Badge>;
 }
 

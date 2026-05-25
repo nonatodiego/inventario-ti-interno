@@ -6,7 +6,7 @@ export async function apiGet<T>(path: string): Promise<T> {
   });
 
   if (!response.ok) {
-    throw new Error("Nao foi possivel carregar os dados.");
+    throw new Error("Não foi possível carregar os dados.");
   }
 
   return response.json() as Promise<T>;

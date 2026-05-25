@@ -13,7 +13,7 @@ export function Topbar() {
         />
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="ghost" aria-label="Notificacoes">
+        <Button variant="ghost" aria-label="Notificações">
           <Bell className="h-4 w-4" />
         </Button>
         <div className="hidden items-center gap-2 rounded-md border border-border px-3 py-2 text-sm md:flex">
